@@ -1,0 +1,1136 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<meta
+  name="viewport"
+  content="
+    width=device-width,
+    initial-scale=1,
+    maximum-scale=1,
+    user-scalable=no
+  "
+>
+
+<style>
+
+/* NỀN */
+
+body{
+
+  margin:0;
+
+  overflow:hidden;
+
+  background:
+    linear-gradient(
+      to bottom,
+      #9fe8ff,
+      #dff8ff
+    );
+
+  font-family:Arial;
+
+}
+
+
+
+/* MÂY */
+
+.cloud{
+
+  position:absolute;
+
+  color:white;
+
+  opacity:0.9;
+
+  font-size:90px;
+
+  animation:
+    cloudMove linear infinite;
+
+  pointer-events:none;
+
+}
+
+
+@keyframes cloudMove{
+
+  0%{
+
+    transform:
+      translateX(-200px);
+
+  }
+
+  100%{
+
+    transform:
+      translateX(
+        calc(100vw + 200px)
+      );
+
+  }
+
+}
+
+
+
+/* MẶT TRỜI */
+
+#sun{
+
+  position:fixed;
+
+  top:20px;
+
+  left:20px;
+
+  font-size:120px;
+
+  animation:
+    sunGlow 2s infinite;
+
+  pointer-events:none;
+
+}
+
+
+@keyframes sunGlow{
+
+  0%{
+
+    transform:
+      scale(1);
+
+  }
+
+  50%{
+
+    transform:
+      scale(1.08);
+
+  }
+
+  100%{
+
+    transform:
+      scale(1);
+
+  }
+
+}
+
+
+
+/* EMOJI */
+
+.item{
+
+  position:absolute;
+
+  font-size:95px;
+
+  cursor:pointer;
+
+  transition:4s linear;
+
+  animation:
+    float 3s infinite ease-in-out;
+
+  z-index:5;
+
+}
+
+
+@keyframes float{
+
+  0%{
+    transform:
+      translateY(0px);
+  }
+
+  50%{
+    transform:
+      translateY(-10px);
+  }
+
+  100%{
+    transform:
+      translateY(0px);
+  }
+
+}
+
+
+
+/* CHỮ */
+
+.wordPopup{
+
+  position:absolute;
+
+  font-size:30px;
+
+  font-weight:bold;
+
+  color:#333;
+
+  background:white;
+
+  padding:8px 18px;
+
+  border-radius:20px;
+
+  box-shadow:
+    0 4px 10px rgba(0,0,0,0.2);
+
+  animation:
+    fadeWord 1.5s forwards;
+
+  pointer-events:none;
+
+  z-index:99;
+
+}
+
+
+@keyframes fadeWord{
+
+  0%{
+
+    opacity:0;
+
+    transform:
+      scale(0.7);
+
+  }
+
+  20%{
+
+    opacity:1;
+
+    transform:
+      scale(1);
+
+  }
+
+  100%{
+
+    opacity:0;
+
+    transform:
+      translateY(-20px);
+
+  }
+
+}
+
+
+
+/* NÚT */
+
+#openButton{
+
+  position:fixed;
+
+  top:10px;
+
+  right:10px;
+
+  width:65px;
+
+  height:65px;
+
+  border:none;
+
+  border-radius:50%;
+
+  font-size:30px;
+
+  background:white;
+
+  box-shadow:
+    0 4px 10px rgba(0,0,0,0.2);
+
+  z-index:999;
+
+}
+
+
+
+/* PANEL */
+
+#panel{
+
+  position:fixed;
+
+  top:85px;
+
+  right:10px;
+
+  width:300px;
+
+  max-height:80vh;
+
+  overflow:auto;
+
+  background:white;
+
+  border-radius:20px;
+
+  padding:12px;
+
+  display:none;
+
+  z-index:999;
+
+  box-shadow:
+    0 4px 10px rgba(0,0,0,0.2);
+
+}
+
+
+textarea{
+
+  width:100%;
+
+  height:170px;
+
+  font-size:18px;
+
+  box-sizing:border-box;
+
+  border-radius:10px;
+
+  padding:10px;
+
+}
+
+
+#loadButton{
+
+  width:100%;
+
+  margin-top:10px;
+
+  padding:12px;
+
+  border:none;
+
+  border-radius:12px;
+
+  background:#4caf50;
+
+  color:white;
+
+  font-size:20px;
+
+  font-weight:bold;
+
+}
+
+
+
+/* SAO */
+
+.star{
+
+  position:absolute;
+
+  font-size:35px;
+
+  animation:
+    pop 0.7s forwards;
+
+  pointer-events:none;
+
+  z-index:50;
+
+}
+
+
+@keyframes pop{
+
+  0%{
+
+    opacity:1;
+
+    transform:
+      scale(0.5);
+
+  }
+
+  100%{
+
+    opacity:0;
+
+    transform:
+      translateY(-80px)
+      scale(1.5);
+
+  }
+
+}
+
+
+
+/* RECORD */
+
+.recordRow{
+
+  margin-top:10px;
+
+  padding:8px;
+
+  border-radius:12px;
+
+  background:#f2f2f2;
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:space-between;
+
+}
+
+
+.recordButton{
+
+  border:none;
+
+  background:#ff5252;
+
+  color:white;
+
+  padding:8px 12px;
+
+  border-radius:10px;
+
+  font-size:18px;
+
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- MẶT TRỜI -->
+
+<div id="sun">
+🌞
+</div>
+
+
+
+<button id="openButton">
+📚
+</button>
+
+
+<div id="panel">
+
+<textarea id="input">
+
+🦋=bướm
+🐞=bọ rùa
+🐜=kiến
+🐝=ong
+🐢=rùa
+🍎=quả táo
+🚗=xe hơi
+🐶=con chó
+
+</textarea>
+
+<button id="loadButton">
+Nạp 😄
+</button>
+
+<div id="recordList"></div>
+
+</div>
+
+
+<script>
+
+
+let items = [];
+
+let tapCount = 0;
+
+let mediaRecorder;
+
+let audioChunks = [];
+
+let currentRecordKey = "";
+
+
+
+// PANEL
+
+document
+  .getElementById("openButton")
+  .onclick = function(){
+
+    let panel =
+      document.getElementById("panel");
+
+
+    if(panel.style.display=="block"){
+
+      panel.style.display =
+        "none";
+
+    }else{
+
+      panel.style.display =
+        "block";
+
+    }
+
+  };
+
+
+
+
+// LOAD DỮ LIỆU
+
+function loadData(){
+
+  items = [];
+
+
+  let text =
+
+    document
+      .getElementById("input")
+      .value;
+
+
+  let lines =
+    text.split("\n");
+
+
+  for(let line of lines){
+
+    if(line.includes("=")){
+
+      let parts =
+        line.split("=");
+
+
+      items.push({
+
+        emoji:
+          parts[0].trim(),
+
+        text:
+          parts[1].trim()
+
+      });
+
+    }
+
+  }
+
+
+  localStorage.setItem(
+    "savedItems",
+    text
+  );
+
+
+  buildRecordButtons();
+
+  startGame();
+
+}
+
+
+
+// KHÔI PHỤC
+
+let saved =
+
+  localStorage.getItem(
+    "savedItems"
+  );
+
+if(saved){
+
+  document
+    .getElementById("input")
+    .value =
+      saved;
+
+}
+
+
+
+// SAO
+
+function createStars(x,y){
+
+  for(let i=0;i<6;i++){
+
+    let star =
+      document.createElement("div");
+
+    star.className =
+      "star";
+
+    star.innerHTML =
+      "✨";
+
+
+    star.style.left =
+      (x + Math.random()*50)
+      + "px";
+
+
+    star.style.top =
+      (y + Math.random()*50)
+      + "px";
+
+
+    document.body.appendChild(star);
+
+
+    setTimeout(function(){
+
+      star.remove();
+
+    },700);
+
+  }
+
+}
+
+
+
+// CHỮ
+
+function showWord(text,x,y){
+
+  let popup =
+    document.createElement("div");
+
+  popup.className =
+    "wordPopup";
+
+  popup.innerHTML =
+    text;
+
+
+  popup.style.left =
+    x + "px";
+
+
+  popup.style.top =
+    (y + 90) + "px";
+
+
+  document.body.appendChild(popup);
+
+
+  setTimeout(function(){
+
+    popup.remove();
+
+  },1500);
+
+}
+
+
+
+// PHÁT AUDIO
+
+function playAudio(key,text){
+
+  let savedAudio =
+    localStorage.getItem(
+      "audio_" + key
+    );
+
+
+  // CÓ FILE THẬT
+
+  if(savedAudio){
+
+    let audio =
+      new Audio(savedAudio);
+
+    audio.play();
+
+  }
+
+  // KHÔNG CÓ -> GIỌNG GOOGLE
+
+  else{
+
+    speechSynthesis.cancel();
+
+
+    let speak =
+
+      new SpeechSynthesisUtterance(
+        text
+      );
+
+
+    speak.lang = "vi-VN";
+
+    speak.rate = 0.55;
+
+    speechSynthesis.speak(speak);
+
+  }
+
+}
+
+
+
+// GHI ÂM
+
+async function startRecord(key,button){
+
+  currentRecordKey = key;
+
+
+  let stream =
+
+    await navigator
+      .mediaDevices
+      .getUserMedia({
+        audio:true
+      });
+
+
+  mediaRecorder =
+    new MediaRecorder(stream);
+
+
+  audioChunks = [];
+
+
+  mediaRecorder.ondataavailable =
+    function(e){
+
+      audioChunks.push(e.data);
+
+    };
+
+
+  mediaRecorder.onstop =
+    function(){
+
+      let blob =
+        new Blob(
+          audioChunks,
+          {
+            type:"audio/webm"
+          }
+        );
+
+
+      let reader =
+        new FileReader();
+
+
+      reader.onloadend =
+        function(){
+
+          // LƯU MÃI
+
+          localStorage.setItem(
+
+            "audio_" +
+            currentRecordKey,
+
+            reader.result
+
+          );
+
+        };
+
+
+      reader.readAsDataURL(blob);
+
+    };
+
+
+  mediaRecorder.start();
+
+
+  button.innerHTML =
+    "⏹";
+
+
+  button.onclick =
+    function(){
+
+      mediaRecorder.stop();
+
+      button.innerHTML =
+        "🎤";
+
+      button.onclick =
+        function(){
+
+          startRecord(
+            key,
+            button
+          );
+
+        };
+
+    };
+
+}
+
+
+
+// TẠO DANH SÁCH GHI ÂM
+
+function buildRecordButtons(){
+
+  let box =
+    document.getElementById(
+      "recordList"
+    );
+
+
+  box.innerHTML = "";
+
+
+  for(let item of items){
+
+    let row =
+      document.createElement("div");
+
+    row.className =
+      "recordRow";
+
+
+    let label =
+      document.createElement("div");
+
+    label.innerHTML =
+
+      item.emoji +
+      " " +
+      item.text;
+
+
+    let button =
+      document.createElement("button");
+
+    button.className =
+      "recordButton";
+
+    button.innerHTML =
+      "🎤";
+
+
+    let key =
+      item.emoji +
+      "_" +
+      item.text;
+
+
+    button.onclick =
+      function(){
+
+        startRecord(
+          key,
+          button
+        );
+
+      };
+
+
+    row.appendChild(label);
+
+    row.appendChild(button);
+
+    box.appendChild(row);
+
+  }
+
+}
+
+
+
+// DI CHUYỂN CHẬM
+
+function moveItem(div){
+
+  setInterval(function(){
+
+    let x =
+
+      20 +
+
+      Math.random() *
+
+      (window.innerWidth - 140);
+
+
+    let y =
+
+      50 +
+
+      Math.random() *
+
+      (window.innerHeight - 250);
+
+
+
+    div.style.left =
+      x + "px";
+
+
+    div.style.top =
+      y + "px";
+
+
+  },4000);
+
+}
+
+
+
+// TẠO HÌNH
+
+function createItem(data){
+
+  let div =
+    document.createElement("div");
+
+  div.className = "item";
+
+  div.innerHTML = data.emoji;
+
+
+  div.style.left =
+
+    20 +
+
+    Math.random() *
+
+    (window.innerWidth - 140)
+
+    + "px";
+
+
+  div.style.top =
+
+    50 +
+
+    Math.random() *
+
+    (window.innerHeight - 250)
+
+    + "px";
+
+
+
+  // BẤM
+
+  div.onclick = function(){
+
+
+    // ĐẾM
+
+    tapCount++;
+
+
+    // ĐỦ 7 -> ĐỔI MÀN
+
+    if(tapCount >= 7){
+
+      tapCount = 0;
+
+      setTimeout(function(){
+
+        startGame();
+
+      },600);
+
+    }
+
+
+
+    // PHÓNG TO
+
+    div.style.transform =
+      "scale(1.5)";
+
+
+    setTimeout(function(){
+
+      div.style.transform =
+        "scale(1)";
+
+    },250);
+
+
+
+    // SAO
+
+    createStars(
+
+      parseInt(div.style.left),
+
+      parseInt(div.style.top)
+
+    );
+
+
+
+    // CHỮ
+
+    showWord(
+
+      data.text,
+
+      parseInt(div.style.left),
+
+      parseInt(div.style.top)
+
+    );
+
+
+
+    // AUDIO
+
+    let key =
+      data.emoji +
+      "_" +
+      data.text;
+
+
+    playAudio(
+      key,
+      data.text
+    );
+
+  }
+
+
+  document.body.appendChild(div);
+
+
+  // BAY CHẬM
+
+  moveItem(div);
+
+}
+
+
+
+// START
+
+function startGame(){
+
+
+  document
+    .querySelectorAll(".item")
+    .forEach(i=>i.remove());
+
+
+
+  let count =
+
+    Math.floor(
+      Math.random()*5
+    ) + 1;
+
+
+
+  for(let i=0;i<count;i++){
+
+
+    let random =
+
+      items[
+        Math.floor(
+          Math.random()*items.length
+        )
+      ];
+
+
+    createItem(random);
+
+  }
+
+}
+
+
+
+/* MÂY */
+
+function createCloud(){
+
+  let cloud =
+    document.createElement("div");
+
+  cloud.className =
+    "cloud";
+
+
+  cloud.innerHTML =
+    "☁️";
+
+
+  cloud.style.top =
+
+    Math.random() * 250
+    + "px";
+
+
+  cloud.style.animationDuration =
+
+    (
+      20 +
+      Math.random()*20
+    ) + "s";
+
+
+  document.body.appendChild(cloud);
+
+}
+
+
+// TẠO NHIỀU MÂY
+
+for(let i=0;i<6;i++){
+
+  createCloud();
+
+}
+
+
+
+// NÚT NẠP
+
+document
+  .getElementById("loadButton")
+  .onclick =
+    loadData;
+
+
+
+// START
+
+loadData();
+
+</script>
+
+</body>
+</html>
