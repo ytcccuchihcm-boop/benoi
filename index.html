@@ -1026,6 +1026,7 @@ div.style.touchAction = "none";
   dragging = true;
 
   div.dataset.dragging = "1";
+    div.style.transition = "none";
 
   offsetX =
     e.clientX - div.offsetLeft;
@@ -1052,6 +1053,7 @@ document.addEventListener("pointerup", function(){
   dragging = false;
 
   div.dataset.dragging = "0";
+  div.style.transition = "4s linear";
 
 });
   document.body.appendChild(div);
