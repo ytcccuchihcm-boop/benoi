@@ -1026,13 +1026,35 @@ div.style.touchAction = "none";
   dragging = true;
 
   div.dataset.dragging = "1";
-    div.style.transition = "none";
+
+  div.style.transition = "none";
 
   offsetX =
     e.clientX - div.offsetLeft;
 
   offsetY =
     e.clientY - div.offsetTop;
+
+  let key =
+    data.emoji +
+    "_" +
+    data.text;
+
+  createStars(
+    parseInt(div.style.left),
+    parseInt(div.style.top)
+  );
+
+  showWord(
+    data.text,
+    parseInt(div.style.left),
+    parseInt(div.style.top)
+  );
+
+  playAudio(
+    key,
+    data.text
+  );
 
 });
 
