@@ -872,32 +872,25 @@ function moveItem(div){
 
   setInterval(function(){
 
+    if(div.dataset.dragging=="1"){
+      return;
+    }
+
     let x =
-
       20 +
-
       Math.random() *
-
       (window.innerWidth - 140);
 
-
     let y =
-
       50 +
-
       Math.random() *
-
       (window.innerHeight - 250);
-
-
 
     div.style.left =
       x + "px";
 
-
     div.style.top =
       y + "px";
-
 
   },4000);
 
@@ -915,6 +908,11 @@ function createItem(data){
   div.className = "item";
 
   div.innerHTML = data.emoji;
+  let dragging = false;
+let offsetX = 0;
+let offsetY = 0;
+
+div.style.touchAction = "none";
 
 
   div.style.left =
@@ -1023,6 +1021,39 @@ function createItem(data){
   }
 
 
+  div.addEventListener("pointerdown", function(e){
+
+  dragging = true;
+
+  div.dataset.dragging = "1";
+
+  offsetX =
+    e.clientX - div.offsetLeft;
+
+  offsetY =
+    e.clientY - div.offsetTop;
+
+});
+
+document.addEventListener("pointermove", function(e){
+
+  if(!dragging) return;
+
+  div.style.left =
+    (e.clientX - offsetX) + "px";
+
+  div.style.top =
+    (e.clientY - offsetY) + "px";
+
+});
+
+document.addEventListener("pointerup", function(){
+
+  dragging = false;
+
+  div.dataset.dragging = "0";
+
+});
   document.body.appendChild(div);
 
 
